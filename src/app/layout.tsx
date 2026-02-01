@@ -10,6 +10,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "NEXTish | Future-Ready Solutions",
   description: "Innovative tech solutions for the next generation. A leading startup focused on digital transformation.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
