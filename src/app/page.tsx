@@ -1,65 +1,96 @@
-import Image from "next/image";
+"use client";
+
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Services from "@/components/Services";
+import Footer from "@/components/Footer";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen relative bg-white">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[60] origin-left shadow-sm"
+        style={{ scaleX }}
+      />
+
+      <Navbar />
+      
+      <Hero />
+      
+      <Services />
+
+      {/* Modernised CTA Highlight Section */}
+      <section className="section-padding overflow-hidden">
+        <div className="container-custom">
+          <div className="relative rounded-[2.5rem] bg-foreground text-white p-10 md:p-20 overflow-hidden group shadow-2xl">
+            {/* Background Accents */}
+            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-primary/20 blur-[100px] rounded-full pointer-events-none transition-transform group-hover:scale-110 duration-1000" />
+            
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-20 items-center">
+              <div className="lg:col-span-3">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-4xl md:text-6xl font-black mb-8 leading-tight"
+                >
+                  Ready to <span className="text-accent underline decoration-primary underline-offset-8">accelerate</span> your evolution?
+                </motion.h2>
+                <p className="text-white/70 text-lg md:text-xl mb-12 leading-relaxed font-medium max-w-xl">
+                  Join hundreds of forward-thinking enterprises that trust NEXTish 
+                  to power their digital transformation journeys.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-5">
+                  <button className="bg-white text-foreground px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/90 transition-all hover:scale-105 shadow-xl shadow-black/20">
+                    Get Started Free
+                  </button>
+                  <button className="bg-white/10 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/20 transition-all border border-white/10">
+                    Explore Enterprise
+                  </button>
+                </div>
+              </div>
+
+              <div className="lg:col-span-2 hidden lg:block">
+                <motion.div 
+                  initial={{ opacity: 0, x: 20, rotate: 5 }}
+                  whileInView={{ opacity: 1, x: 0, rotate: -2 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className="relative group-hover:rotate-0 transition-transform duration-700"
+                >
+                  <div className="absolute -inset-6 bg-primary/30 blur-[40px] rounded-full pointer-events-none" />
+                  <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl shadow-2xl">
+                    <pre className="text-sm font-mono leading-relaxed">
+                      <code className="text-accent">
+                        {`// Connect with NEXTish
+const sdk = require('@nextish/core');
+
+await sdk.init({
+  id: 'PROJ-777',
+  env: 'enterprise'
+});
+
+console.log('Evolution Ready.');`}
+                      </code>
+                    </pre>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <Footer />
+    </main>
   );
 }
